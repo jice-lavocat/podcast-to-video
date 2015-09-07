@@ -33,18 +33,7 @@ var audioParams = {
   delay: 2 // seconds
 }
 
-
-glob(imagesPattern, function (er, images) {
-  // files is an array of filenames.
-  // If the `nonull` option is set, and nothing
-  // was found, then files is ["**/*.js"]
-  // er is an error object or null.
-
-  console.log(images);
-  var lenImages = images.length;
-
-
-
+var images = glob.sync(imagesPattern);
 
 
   // Video Generation
@@ -64,4 +53,4 @@ glob(imagesPattern, function (er, images) {
 
 
 
-})
+//})
