@@ -4,6 +4,7 @@
   "description": " A script that convert a set of folders containing [images + a mp3 file] into a video",
   "main": "index.js",
   "dependencies": {
+    "glob": "^5.0.14",
     "videoshow": "^0.1.9"
   },
   "devDependencies": {},
