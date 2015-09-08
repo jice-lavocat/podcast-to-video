@@ -4,14 +4,8 @@ var probe = require('node-ffprobe');
 
 var rootFolder = "episodes/713/";
 
-var images = [
-  'step1.jpg',
-  'step2.jpg',
-  'step3.jpg',
-  'step4.jpg'
-]
-  
-
+var logo = 'shared/bandeau.png';
+var intro = "shared/intro.mp4";
 
 // options is optional
 var imagesPattern = rootFolder + "*.png"
@@ -30,8 +24,7 @@ probe(mp3File, function(err, probeData) {
     console.log(mp3Duration);
 
     var loopTime = mp3Duration / imageNumber ;
-    console.log("Loop for each image : ");
-    console.log(loopTime);
+
 
     if (loopTime < imageDisplayMinTime){
       console.log("There are too many images, they will be displayed for a very short time");
@@ -44,33 +37,33 @@ probe(mp3File, function(err, probeData) {
       console.log(images);
     }
 
-    console.log("Loop for each image : ");
-    console.log(loopTime);
-
     var videoOptions = {
-    fps: 25,
-    loop: loopTime, // seconds
-    //loop: 5, // seconds
-    transition: true,
-    transitionDuration: 1, // seconds
-    videoBitrate: 1024,
-    videoCodec: 'libx264',
-    size: '640x?',
-    audioBitrate: '128k',
-    audioChannels: 2,
-    format: 'mp4'
-  }
+      fps: 25,
+      loop: loopTime, // seconds
+      //loop: 5, // seconds
+      transition: true,
+      transitionDuration: 1, // seconds
+      videoBitrate: 1024,
+      videoCodec: 'libx264',
+      size: '640x?',
+      audioBitrate: '128k',
+      audioChannels: 2,
+      format: 'mp4'
+    }
 
-  var audioParams = {
-    fade: true,
-    delay: 2 // seconds
-  }
+    var audioParams = {
+      fade: true,
+      delay: 2 // seconds
+    }
 
 
 
   // Video Generation
-  videoshow(images, videoOptions)
+  videoshow(imagesInit, videoOptions)
+  //videoshow(images, videoOptions)
   .audio(mp3File, audioParams)
+  .logo(logo)
+  .input(intro)
   .save(rootFolder + 'video.mp4')
   .on('start', function (command) {
     console.log('ffmpeg process started:', command)
@@ -85,9 +78,3 @@ probe(mp3File, function(err, probeData) {
 
 
 });
-
-
-
-
-
-//})
