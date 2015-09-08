@@ -10,14 +10,18 @@ var images = [
   'step3.jpg',
   'step4.jpg'
 ]
+  
 
 
 // options is optional
 var imagesPattern = rootFolder + "*.png"
 var images = glob.sync(imagesPattern);
+var imagesInit = images;   // Duplicate the list for long loop construction
 var imageNumber = images.length;
 var mp3File = rootFolder + '713.mp3';
 
+var imageDisplayMaxTime = 15;
+var imageDisplayMinTime = 3;
 
 
 
@@ -26,10 +30,22 @@ probe(mp3File, function(err, probeData) {
     console.log(mp3Duration);
 
     var loopTime = mp3Duration / imageNumber ;
+    console.log("Loop for each image : ");
+    console.log(loopTime);
 
+    if (loopTime < imageDisplayMinTime){
+      console.log("There are too many images, they will be displayed for a very short time");
+    }
 
-});
+    while (loopTime > imageDisplayMaxTime){
+      images = images.concat(imagesInit);
+      imageNumber = images.length;
+      loopTime = mp3Duration / imageNumber ;
+      console.log(images);
+    }
 
+    console.log("Loop for each image : ");
+    console.log(loopTime);
 
     var videoOptions = {
     fps: 25,
@@ -66,6 +82,11 @@ probe(mp3File, function(err, probeData) {
   .on('end', function (output) {
     console.error('Video created in:', output)
   })
+
+
+});
+
+
 
 
 
